@@ -5,26 +5,33 @@ public class Main {
     final static byte PERCENT = 100;
     final static short numberOfMonths = 12;
     public static void main() {
-        Scanner scanner = new Scanner(System.in);
-
         int principal = (int)readNumber("Principal: ", 1000, 1000000);
         double annualInterestRate = readNumber("Interest Rate: ", 1, 30);
         int numberOfPayments = (int)readNumber("Number of Payments (YEARS):", 1, 30);
 
         double mortgage = calculateMortgage(principal, annualInterestRate, numberOfPayments);
+        printMortgage(mortgage);
+        printPaymentSchedule(numberOfPayments, principal, annualInterestRate);
+    }
+
+    private static void printMortgage(double mortgage) {
         System.out.print("Mortgage:");
         String mortgageFormatted = NumberFormat.getCurrencyInstance().format(mortgage);
         System.out.println("MORTGAGE");
         System.out.println("Monthly Payments: " + mortgageFormatted);
-        System.out.println("PAYMENT SCHEDULE");
+    }
 
+    private static void printPaymentSchedule(
+            int numberOfPayments,
+            int principal,
+            double annualInterestRate) {
+        System.out.println("PAYMENT SCHEDULE");
         for (short month = 1; month <= numberOfPayments; month++) {
             double balance = calculateRemainingBalance(principal, annualInterestRate, numberOfPayments, month);
             System.out.println(NumberFormat.getCurrencyInstance().format(balance));
         }
-
-
     }
+
     public static double readNumber(String prompt, int min, int max){
         Scanner scanner = new Scanner(System.in);
         double value;
